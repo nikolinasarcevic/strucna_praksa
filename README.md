@@ -1,0 +1,1 @@
+# strucna_praksa
