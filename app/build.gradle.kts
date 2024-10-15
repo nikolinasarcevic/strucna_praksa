@@ -77,4 +77,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation (libs.timber)
+
+    implementation(libs.lifecycle.runtime.compose)
 }

@@ -12,6 +12,8 @@ ksp = "2.0.20-1.0.24"
 hilt = "2.52"
 hilt-navigation = "1.0.0"
 timber-version = "5.0.1"
+lifecycle-version = "2.8.6"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,7 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android" , version.re
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler" ,  version.ref = "hilt"}
 hilt-navigation = {group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation"}
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber-version"}
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-version"}
 
 
 [plugins]

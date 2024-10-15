@@ -1,37 +1,46 @@
 package com.example.myapplication.ui.presentation.counter_screen
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.ui.presentation.counter_screen.intent.CounterIntent
+import com.example.myapplication.ui.presentation.counter_screen.intent.CounterState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CounterViewModel @Inject constructor() : ViewModel() {
-    private var _count by mutableIntStateOf(0)
-    private var _count2 by mutableIntStateOf(100)
+    private var _state = MutableStateFlow(CounterState())
 
-    val count: Int
-        get() = _count
+    val state: StateFlow<CounterState>
+        get() = _state
 
-    val count2: Int
-        get() = _count2
-
-
-    fun incrementCount() {
-        _count++
-        Timber.d("counter incr: $(_count)")
+    fun processIntent(intent: CounterIntent) {
+        when (intent) {
+            CounterIntent.IncrementCount -> incrementCount()
+            CounterIntent.DecrementCount -> decrementCount()
+        }
     }
 
-    fun decrementCount() {
-        if(_count2 == 0){
-            _count2 = 100
-        } else _count2--
-        Timber.d("counter incr: $(_count2)")
+    private fun incrementCount() {
+        _state.update { state -> state.copy(count = _state.value.count + 1) }
+//        Timber.d("counter incr: ${_state.count}")
     }
 
+    private fun decrementCount() {
+        _state.update { currentState ->
+            val newCount2 = if (currentState.count2 == 0) {
+                100
+            } else {
+                currentState.count2 - 1
+            }
+            currentState.copy(count2 = newCount2)
+        }
+        Timber.d("counter decr: ${_state.value.count2}")
+
+    }
+//        Timber.d("counter decr: ${_state.count2}")
+//    }
 }
